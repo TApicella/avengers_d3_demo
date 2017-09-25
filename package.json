@@ -1,0 +1,19 @@
+{
+  "name": "avengers_data",
+  "version": "1.0.0",
+  "description": "Demo of D3+React integration",
+  "main": "avengers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
+    "d3": "^4.10.2",
+    "events": "^1.1.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}

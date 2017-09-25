@@ -1,0 +1,52 @@
+/* Avengers.css */
+
+.d3{
+	margin-left: 20px;
+	margin-top: 20px;
+}
+.d3-zcolor-0{
+	fill: #0000FF;
+}
+
+.d3-zcolor-1{
+	fill: #FF0000;
+}
+
+.d3-zcolor-0-highlight{
+	fill: #9999FF;
+}
+
+.d3-zcolor-1-highlight{
+	fill: #FF9999;
+}
+
+.axis-label{
+	font-size: 36px;
+	font-weight: bold;
+}
+
+.highlight-row{
+	background-color: yellow;
+}
+
+table { 
+  table-layout: fixed;
+  width: 100%
+}
+
+ td {
+	word-wrap: break-word;
+}
+
+tr{
+	outline: thin solid;
+	outline-color: #BBBBBB;
+}
+
+.header{
+	background-color: #DDDDDD;
+}
+
+.header-cell{
+	font-weight: bolder;
+}

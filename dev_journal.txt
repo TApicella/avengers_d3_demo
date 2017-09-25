@@ -1,0 +1,216 @@
+6/15/2016 2:11pm
+
+I had two ideas this morning that I thought might be useful/fun. The first was to make this project a proper git repo. That seems like it should be an obvious step but it ownly dawned on me now for some reason.
+
+The second is to make this dev journal. Part design document, part informal progress log. I felt that it would be a way to share my thought process and also give you guys a sense of my personality as well! 
+
+The past two days I've spent mostly doing research and little code tests in between general life and housekeeping tasks. I want today to be strictly dedicated to coding.
+
+
+
+Summary of assignment: 
+
+Create dynamic charting and connected table
+	Bar chart
+		Bars by gender, count per year, grouped by year
+		Legend
+	Table
+		Name/Alias as link via URL field
+		Gender
+		Year
+		Notes
+	Chart interaction
+		Bar click highlights bar and associated rows
+		Multiple bars can be active
+		Second click removes bar
+
+
+
+Personal stretch goals:
+
+*  Have table be sortable by name or year (does not affect chart)
+
+*  Have table be filterable by gender (does affect chart)
+
+*  Have optional toggle for expandable notes (reducing table size to make it more friendly for smaller screens)
+
+*  Gave a year range specification to limit chart and table scope
+
+*  Similarly, have a "carousel" view for chart, i.e. have it display only a few years at a time that can be traversed, again as a space saving measure
+
+
+
+Technology stack:
+
+I always try to use a mix of familiar and unfamiliar technology when doing coding projects, while still using appropriate tools for the job. In this case, I'm going to be using React.js and D3. D3 seems to be the right tool for the task, and the job posting implied that D3 knowledge would be helpful at Tembo regardless. I'm not going to be using the React-D3 pluging because I want to learn vanilla D3 in its own right. I'm going to try to stay away from JQuery primarily because it doesn't always play nice with React, but mostly for performance.
+
+Because React internally tracks the DOM, while D3 modifies the DOM, they can be fussy to integrate, but my research has indicated that they can work together very well: http://nicolashery.com/integrating-d3js-visualizations-in-a-react-app/
+
+
+
+Project structure:
+
+	Directories
+		src is where the raw React jsx files go
+		
+		build is where the compiled React files go, as well as D3 specific files. Essentially, build is all "completed" components 
+		
+		js is where anything being manually imported into the index.html file will go and any js scripts. This is where the browserified package will reside
+
+		data is where the raw csv will live
+
+		css will be all stylesheets
+
+
+	Files
+		index.html will be the actual viewable file
+
+		datasource.js will handle the data importing and transforming, and potentially data cleaning, so that the rest of the application isn't reliant on a specific data set but rather a generalized data structure 
+
+		avengers.js will be the master React component
+
+		chart.js and table.js will be the React wrappers for the D3 chart and the table respectively. d3Chart.js and dataTable.js will be the visual controls  		
+			I may not use D3 for the table. React has a sortable-table component that would work well for my stretch goal of having the table be sortable and filterable. 
+
+
+
+
+Next steps:
+	I want to plunge right in with getting a working D3 chart. I feel that the outcome of this step will dictate the direction I want to take with the table. So, first things I need to do are import my node modules, setup the index.html file and create a generic test avengers.js, then set up the data source
+
+
+
+
+6/15/2016 3:40pm
+
+Took a break to deal with Amazon refund issues. Node modules installed, index.html setup, generic avengers.js created. As I'm looking at the data, I've found a jquery-csv module that does look really handy, so I guess I'm going to use some jquery after all.
+
+SO question: http://stackoverflow.com/questions/7431268/how-to-read-data-from-csv-file-using-javascript
+
+module page: https://github.com/evanplaice/jquery-csv
+
+I considered doing a one-time conversion of the csv to json, but that seems like poor practice in case a variable data source would be used in the future.
+
+
+
+
+6/15/2016 4:55pm
+
+After an EMBARASSING amount of time, I got csv importing to work. Funnily enough, using D3 and not jQuery. To me, it seems like this is one of those tasks that people take for granted and thus the advice on how to do it can be a bit hard to parse, but eventually someone said "oh I just used D3" and from there it was a piece of cake. 
+
+Resource used: http://learnjsdata.com/read_data.html
+
+
+
+
+6/15/2016 6:07pm
+
+Data is being read succesfully and displayed in plaintext as according to React best practice. https://facebook.github.io/react/tips/initial-ajax.html
+
+Currently it is being done in the main avengers.js file, next step is to refactor it to the datasource file
+
+
+
+
+6/15/2016 8:13pm
+
+Ate some dinner, refactored out the datasources to modularize things as much as possible
+
+
+
+
+6/15/2016 9:00pm
+
+Going to merge the initial_setup branch into master now. Next up will be the basic d3 chart
+
+
+
+
+6/16/2016 3:09pm
+
+Whoops, completely forgot about this journal.
+
+Just about to do a first test of the React-wrapped d3 chart. 
+
+Also, for personal reference so I remember why I used these in chart.js : http://wecodetheweb.com/2015/06/02/why-react-proptypes-are-important/
+
+
+
+
+6/16/2016 3:31pm
+
+Basic d3 chart is working. 
+
+Next steps:
+	* Add axis labels
+ 	* Make data loaded from actual CSV
+
+
+
+
+6/16/2016 4:20pm
+
+For some reason I decided to do those steps in the opposite order. I then made a ton of changes and started to get really nervous because I made a few big leaps, but it worked the first time!
+
+I'm not separating by gender yet, just doing total count for testing purposes, but the method I'm using should transfer smoothly.
+
+
+
+
+6/16/2016 5:35pm
+
+Vertical axis looks great, horizontal is getting there but the labels aren't lining up quite right with the bars. I think before I fix that, I'm going to do the gender counting first, so that I'm working on visual tweaks with the actual finalized data.
+
+
+
+
+6/16/2016 5:45pm
+
+Game plan as far as handling the multiple datasets issue
+
+Currently, I have two values: x for year, y for count. I'm going to shift that to be x, y, and z, where z is gender.
+
+There will be a mapping in the main component, "FEMALE" : 0, "MALE" : 1, as to plan for the chart communicating with the table later. 
+
+By having the chart only see numbers, it allows it to be used for an arbitrary set of traits. Additionally, I can use the z value as a modifier for the x position of the bars in order to group them properly and programatically.
+
+If the above felt a little jumbled, I will explain better in my documentation as I'm writing it. That was just for journaling purposes.   
+
+
+
+
+6/16/2016 6:19pm
+
+Datasource now splits between genders, now to update the visual side
+
+
+
+
+6/16/2016 6:30pm
+
+Just realized I should fill in the blank values for year+gender combinations else the bar width calculations will be totally messed up. 
+
+
+
+
+6/16/2016 7:15pm
+
+Axes are on, data is correct. It looks a little funny but it's accurate
+
+
+
+
+6/16/2016 7:27pm
+
+The publicly available sortable table components for react don't seem to let me easily make clickable entries, so I'm going to make a bare bones table for now and then I can see if I can upgrade it later
+
+
+
+
+6/16/2016 8:25pm
+
+The basic table is done! Next steps:
+
+* Make a legend for the chart because I forgot to before
+* Cross interaction between chart and table
+
