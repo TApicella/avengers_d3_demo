@@ -1,11 +1,5 @@
-This is Tom Apicella's code test for Tembo
+This was a code exercise designed to challenge data display skills. 
 
-Installation:
+The requirement was to make a bar chart and a table pulling data from a CSV, such that when the bars on the chart were clicked, the corresponding rows on the table would be highlighted.
 
-npm install react react-dom babelify babel-preset-react d3
-
-Compilation:
-
-babel --presets react src --out-dir build //Compiles jsx to js
-
-browserify build/avengers.js -o js/avengers.js
+This was made using React and D3
