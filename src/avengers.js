@@ -44,6 +44,7 @@ var Avengers = React.createClass({
   	},
 
   	barClicked: function(d) {
+      //When a bar is clicked, highlight the associated rows
   		var new_rows = "";
   		var keys = this.state.domain.chart_to_table;
 

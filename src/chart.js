@@ -2,6 +2,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var d3Chart = require('./d3Chart');
 
+/*The idea behind this component and d3Chart is to separate the React functionality from the D3 functionality
+  This component handles the state and props, and passses data updates to d3Chart
+  In turn, d3Chart is used purely for rendering data 
+  This prevents issues where both frameworks try to interact with the DOM independently*/
+
 var Chart = React.createClass({
   propTypes: {
     data: React.PropTypes.array,

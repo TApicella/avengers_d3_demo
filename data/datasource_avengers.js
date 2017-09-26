@@ -4,6 +4,7 @@ var d3 = require("d3");
 //Path and dataCleaner are unique to the specific dataset 
 var path = "data/avengers-txt.csv";
 
+//Some mappings to be used in transforming the data
 var gendermap = {FEMALE: 0, MALE: 1};
 var reverse_gendermap = {0: "FEMALE", 1: "MALE"};
 
